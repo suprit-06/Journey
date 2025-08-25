@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editkaro.in Portfolio</title>
+  <style>
+    body {
+  margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #f7f7f7;
+}
+header {
+  background: #202938; color: #fff; padding: 2rem 1rem; text-align: center;
+}
+header h1 { margin: 0 0 1rem 0; }
+nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+.filter-btn {
+  background: #243b55; color: #fff; border: none; border-radius: 4px;
+  padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; transition: background 0.2s;
+}
+.filter-btn:hover { background: #f3701d; }
+main { padding: 2rem 1rem; }
+#portfolio-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.portfolio-item {
+  background: #fff; border-radius: 8px; box-shadow: 0 2px 6px #0001;
+  padding: 1rem; text-align: center; transition: transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.portfolio-item:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 4px 14px #0002;
+}
+.portfolio-item h2 {
+  font-size: 1.15rem; margin: .5rem 0;
+}
+.preview-video {
+  width: 100%; max-width: 100%; height: 170px; object-fit: cover;
+  border-radius: 6px; cursor: pointer; box-shadow: 0 2px 8px #243b55a0;
+  transition: box-shadow 0.2s, filter 0.2s;
+}
+.preview-video:hover {
+  box-shadow: 0 6px 20px #f3701d88;
+  filter: brightness(1.1);
+}
+.category-tag {
+  display: inline-block; margin-top: 0.5em; background: #f3701d; color: #fff;
+  border-radius: 4px; padding: .2em .7em; font-size: .85em;
+}
+footer {
+  background: #202938; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem;
+}
+
+/* Lightbox styles */
+#lightbox {
+  position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(11,18,27,0.92); z-index: 9999; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; padding: 2rem; transition: opacity 0.2s;
+}
+#lightbox.hidden { display: none; }
+#close-lightbox {
+  position: absolute; top: 2rem; right: 4rem; font-size: 2.5rem; color: #f3701d; cursor: pointer; z-index: 10001;
+}
+#lightbox-video {
+  max-width: 90vw; max-height: 75vh; border-radius: 12px; outline: none;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  #portfolio-grid { grid-template-columns: 1fr; }
+  nav { flex-direction: column; }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Editkaro.in Portfolio</h1>
+    <nav>
+      <button class="filter-btn" data-category="all">All</button>
+      <button class="filter-btn" data-category="short-form">Short-form Videos</button>
+      <button class="filter-btn" data-category="long-form">Long-form Videos</button>
+      <button class="filter-btn" data-category="gaming">Gaming Videos</button>
+      <button class="filter-btn" data-category="football">Football Edits</button>
+      <button class="filter-btn" data-category="ecommerce">eCommerce Ads</button>
+      <button class="filter-btn" data-category="documentary">Documentary Style</button>
+      <button class="filter-btn" data-category="color-grading">Color Grading</button>
+      <button class="filter-btn" data-category="anime">Anime Videos</button>
+      <button class="filter-btn" data-category="ads">Ads</button>
+    </nav>
+  </header>
+  <main>
+    <section id="portfolio-grid">
+      <!-- Portfolio items inserted here by JS -->
+    </section>
+  </main>
+  <div id="lightbox" class="hidden">
+    <span id="close-lightbox">&times;</span>
+    <video id="lightbox-video" controls autoplay></video>
+  </div>
+  <footer>
+    <p>&copy; 2025 Editkaro.in - Social Media Marketing & Video Editing Agency</p>
+  </footer>
+  <script>
+    // Example dummy data, replace with your actual videos/links
+const portfolioData = [
+  {
+    title: "Instagram Reel: Cafe Promo",
+    category: "short-form",
+    video: "videos/cafe.mp4", // replace with real URL
+    tag: "Short-form Videos"
+  },
+  {
+    title: "YouTube: Travel Vlog - Goa",
+    category: "long-form",
+    video: "videos/vlog.mp4",
+    tag: "Long-form Videos"
+  },
+  {
+    title: "Gaming Montage: FPS Highlights",
+    category: "gaming",
+    video: "videos/gameplay.mp4",
+    tag: "Gaming Videos"
+  },
+  {
+    title: "Football Edit: Messi Goals",
+    category: "football",
+    video: "videos/messi.mp4",
+    tag: "Football Edits"
+  },
+  {
+    title: "Shopify Ad: Summer Sale",
+    category: "ecommerce",
+    video: "videos/sale.mp4",
+    tag: "eCommerce Ads"
+  },
+  {
+    title: "Documentary Cut: Wildlife India",
+    category: "documentary",
+    video: "videos/wildlife.mp4",
+    tag: "Documentary Style"
+  },
+  {
+    title: "Color Grading Showcase",
+    category: "color-grading",
+    video: "videos/grading.mp4",
+    tag: "Color Grading"
+  },
+  {
+    title: "Anime Edit: Naruto Tribute",
+    category: "anime",
+    video: "videos/naruto.mp4",
+    tag: "Anime Videos"
+  },
+  {
+    title: "Facebook Ads: App Launch",
+    category: "ads",
+    video: "videos/app.mp4",
+    tag: "Ads"
+  }
+];
+
+// Populate portfolio grid
+function renderPortfolio(category = "all") {
+  const grid = document.getElementById("portfolio-grid");
+  grid.innerHTML = "";
+  portfolioData.filter(item =>
+    category === "all" ? true : item.category === category
+  ).forEach(item => {
+    const div = document.createElement("div");
+    div.className = "portfolio-item";
+    div.innerHTML = `
+      <video class="preview-video" src="${item.video}" muted loop preload="metadata"></video>
+      <h2>${item.title}</h2>
+      <span class="category-tag">${item.tag}</span>
+    `;
+    div.querySelector(".preview-video").addEventListener("click", () => openLightbox(item.video));
+    grid.appendChild(div);
+  });
+}
+
+// Filter functionality
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const category = btn.getAttribute('data-category');
+    renderPortfolio(category);
+  });
+});
+
+// Lightbox functionality
+function openLightbox(videoSrc) {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxVideo = document.getElementById("lightbox-video");
+  lightboxVideo.src = videoSrc;
+  lightbox.classList.remove("hidden");
+}
+document.getElementById("close-lightbox").onclick = () => {
+  document.getElementById("lightbox").classList.add("hidden");
+  document.getElementById("lightbox-video").pause();
+  document.getElementById("lightbox-video").src = "";
+};
+
+// Initial render
+renderPortfolio("all");
+
+  </script>
+</body>
+</html>

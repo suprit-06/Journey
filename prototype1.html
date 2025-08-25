@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editkaro.in | Portfolio</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+}
+header {
+  text-align: center;
+  padding: 1.5rem;
+  background: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+header h1 {
+  margin-bottom: 1rem;
+}
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+nav li {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #333;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+nav li.active, nav li:hover {
+  background: #ff5722;
+}
+.portfolio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+}
+.card {
+  background: #222;
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: scale(1.05);
+}
+.card video {
+  width: 100%;
+  display: block;
+}
+.card h3 {
+  padding: 0.5rem;
+  background: #333;
+}
+
+/* Lightbox */
+#lightbox {
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#lightbox video {
+  width: 80%;
+  border-radius: 10px;
+}
+#lightbox.hidden {
+  display: none;
+}
+#close {
+  position: absolute;
+  top: 20px; right: 40px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Editkaro.in Portfolio</h1>
+    <nav>
+      <ul>
+        <li data-filter="all" class="active">All</li>
+        <li data-filter="short">Short Videos</li>
+        <li data-filter="long">Long Videos</li>
+        <li data-filter="gaming">Gaming</li>
+        <li data-filter="football">Football</li>
+        <li data-filter="ecommerce">eCommerce Ads</li>
+        <li data-filter="documentary">Documentary</li>
+        <li data-filter="color">Color Grading</li>
+        <li data-filter="anime">Anime</li>
+        <li data-filter="ads">Ads</li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Portfolio Section -->
+  <section class="portfolio">
+    <div class="card" data-category="short">
+      <video src="videos/short1.mp4" muted loop></video>
+      <h3>Short Video 1</h3>
+    </div>
+    <div class="card" data-category="long">
+      <video src="videos/long1.mp4" muted loop></video>
+      <h3>Long Video 1</h3>
+    </div>
+    <div class="card" data-category="gaming">
+      <video src="videos/gaming1.mp4" muted loop></video>
+      <h3>Gaming Edit</h3>
+    </div>
+    <div class="card" data-category="football">
+      <video src="videos/football1.mp4" muted loop></video>
+      <h3>Football Edit</h3>
+    </div>
+    <div class="card" data-category="ecommerce">
+      <video src="videos/ecom1.mp4" muted loop></video>
+      <h3>eCommerce Ad</h3>
+    </div>
+    <div class="card" data-category="documentary">
+      <video src="videos/doc1.mp4" muted loop></video>
+      <h3>Documentary</h3>
+    </div>
+    <div class="card" data-category="color">
+      <video src="videos/color1.mp4" muted loop></video>
+      <h3>Color Grading</h3>
+    </div>
+    <div class="card" data-category="anime">
+      <video src="videos/anime1.mp4" muted loop></video>
+      <h3>Anime Edit</h3>
+    </div>
+    <div class="card" data-category="ads">
+      <video src="videos/ad1.mp4" muted loop></video>
+      <h3>Ad Campaign</h3>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="hidden">
+    <span id="close">&times;</span>
+    <video controls autoplay></video>
+  </div>
+
+  <script>
+    // Filter videos
+const filterBtns = document.querySelectorAll("nav li");
+const cards = document.querySelectorAll(".card");
+
+filterBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelector("nav li.active").classList.remove("active");
+    btn.classList.add("active");
+    const filter = btn.getAttribute("data-filter");
+
+    cards.forEach(card => {
+      if (filter === "all" || card.dataset.category === filter) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+});
+
+// Lightbox
+const lightbox = document.getElementById("lightbox");
+const lightboxVideo = lightbox.querySelector("video");
+const closeBtn = document.getElementById("close");
+
+cards.forEach(card => {
+  const vid = card.querySelector("video");
+  card.addEventListener("click", () => {
+    lightbox.classList.remove("hidden");
+    lightboxVideo.src = vid.src;
+    lightboxVideo.play();
+  });
+});
+
+closeBtn.addEventListener("click", () => {
+  lightbox.classList.add("hidden");
+  lightboxVideo.pause();
+});
+
+  </script>
+</body>
+</html>

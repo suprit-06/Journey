@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault of Codes Internships</title>
+    <style>
+        /* Basic styling and font import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #50E3C2;
+    --background-dark: #1E1E1E;
+    --card-dark: #2A2A2A;
+    --text-light: #F0F0F0;
+    --text-accent: #B0B0B0;
+    --shadow: rgba(0, 0, 0, 0.4);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Main container and headings */
+.container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+}
+
+.program-title {
+    color: var(--text-accent);
+    margin-top: -0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Internship cards grid layout */
+.internship-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Individual internship card styling */
+.internship-card {
+    background-color: var(--card-dark);
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.internship-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
+.internship-card h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.internship-card .details {
+    margin: 1rem 0 2rem;
+    width: 100%;
+}
+
+.internship-card .details p {
+    margin: 0.5rem 0;
+}
+
+.internship-card .details strong {
+    color: var(--secondary-color);
+}
+
+/* Button styling */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: var(--background-dark);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Intern Quest</h1>
+
+        <div class="internship-cards-grid">
+            <div class="internship-card">
+                <h2>Web Development</h2>
+                <p class="program-title">Internship Program</p>
+                <div class="details">
+                    <p><strong>Duration:</strong> 1 month/2 months</p>
+                    <p><strong>Location:</strong> Virtual</p>
+                    <p><strong>Stipend:</strong> -</p>
+                    <p><strong>Start date:</strong> 05/11/2023</p>
+                </div>
+                <a href="#" class="btn">View Details</a>
+            </div>
+
+            <div class="internship-card">
+                <h2>App Development</h2>
+                <p class="program-title">Internship Program</p>
+                <div class="details">
+                    <p><strong>Duration:</strong> 1 month/2 months</p>
+                    <p><strong>Location:</strong> Virtual</p>
+                    <p><strong>Stipend:</strong> -</p>
+                    <p><strong>Start date:</strong> 05/11/2023</p>
+                </div>
+                <a href="#" class="btn">View Details</a>
+            </div>
+
+            <div class="internship-card">
+                <h2>Python Programming</h2>
+                <p class="program-title">Internship Program</p>
+                <div class="details">
+                    <p><strong>Duration:</strong> 1 month/2 months</p>
+                    <p><strong>Location:</strong> Virtual</p>
+                    <p><strong>Stipend:</strong> -</p>
+                    <p><strong>Start date:</strong> 05/11/2023</p>
+                </div>
+                <a href="#" class="btn">View Details</a>
+            </div>
+
+            <div class="internship-card">
+                <h2>Java Programming</h2>
+                <p class="program-title">Internship Program</p>
+                <div class="details">
+                    <p><strong>Duration:</strong> 1 month/2 months</p>
+                    <p><strong>Location:</strong> Virtual</p>
+                    <p><strong>Stipend:</strong> -</p>
+                    <p><strong>Start date:</strong> 05/11/2023</p>
+                </div>
+                <a href="#" class="btn">View Details</a>
+            </div>
+
+            <div class="internship-card">
+                <h2>Data Science</h2>
+                <p class="program-title">Internship Program</p>
+                <div class="details">
+                    <p><strong>Duration:</strong> 6 months</p>
+                    <p><strong>Location:</strong> On Campus</p>
+                    <p><strong>Stipend:</strong> 50000</p>
+                    <p><strong>Start date:</strong> 05/11/2023</p>
+                </div>
+                <a href="#" class="btn">View Details</a>
+            </div>
+            
+                <div class="internship-card">
+                <h2>Data Science</h2>
+                <p class="program-title">Internship Program</p>
+                <div class="details">
+                    <p><strong>Duration:</strong> 6 months</p>
+                    <p><strong>Location:</strong> On Campus</p>
+                    <p><strong>Stipend:</strong> 50000</p>
+                    <p><strong>Start date:</strong> 05/11/2023</p>
+                </div>
+                <a href="https://github.com/suprit-06/Journey" class="btn">View Details</a>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editkaro.in Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General body and typography styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Container for content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header and title styles */
+        header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #A855F7, #EC4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #A0A0A0;
+            margin-top: 0.5rem;
+        }
+
+        /* Category filter buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .filter-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 9999px;
+            background-color: #2D2D2D;
+            color: #F5F5F5;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-button:hover, .filter-button.active {
+            background-color: #EC4899;
+            color: #121212;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(236, 72, 153, 0.3);
+        }
+
+        /* Portfolio grid layout */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Portfolio card styles */
+        .portfolio-item {
+            position: relative;
+            background-color: #1E1E1E;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Thumbnail and content */
+        .portfolio-item .thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: filter 0.3s ease;
+        }
+
+        .portfolio-item:hover .thumbnail {
+            filter: brightness(0.7);
+        }
+
+        .portfolio-item .content {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .portfolio-item h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #F5F5F5;
+        }
+
+        .portfolio-item .category {
+            font-size: 0.9rem;
+            color: #A0A0A0;
+            margin-top: 0.25rem;
+        }
+
+        /* Overlay for hover effects */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            font-size: 3rem;
+            color: #fff;
+            background-color: #EC4899;
+            padding: 1rem;
+            border-radius: 50%;
+            transform: scale(0.8);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .portfolio-item:hover .play-icon {
+            transform: scale(1);
+        }
+
+        /* Lightbox (Modal) styles */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .lightbox-content {
+            position: relative;
+            background-color: #1E1E1E;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+            max-height: 90%;
+            overflow: hidden;
+        }
+
+        .lightbox-video {
+            width: 100%;
+            max-width: 800px;
+            display: block;
+            border-radius: 0.5rem;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Font Awesome for play icon (via CDN) */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .filter-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            .lightbox-content {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Editkaro.in</h1>
+        <p>A showcase of our best work in video editing and social media marketing.</p>
+    </header>
+
+    <div class="container">
+        <!-- Filter Buttons Section -->
+        <nav class="filter-buttons">
+            <button class="filter-button active" data-category="all">All</button>
+            <button class="filter-button" data-category="short-form">Short-Form Videos</button>
+            <button class="filter-button" data-category="long-form">Long-Form Videos</button>
+            <button class="filter-button" data-category="gaming">Gaming Videos</button>
+            <button class="filter-button" data-category="football-edits">Football Edits</button>
+            <button class="filter-button" data-category="ecommerce-ads">eCommerce Ads</button>
+            <button class="filter-button" data-category="documentary">Documentary Style</button>
+            <button class="filter-button" data-category="color-grading">Color Grading</button>
+            <button class="filter-button" data-category="anime">Anime Videos</button>
+            <button class="filter-button" data-category="ads">Ads</button>
+        </nav>
+
+        <!-- Portfolio Grid Section -->
+        <main class="portfolio-grid" id="portfolio-container"></main>
+    </div>
+
+    <!-- Video Lightbox (Modal) -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="close-button" id="close-lightbox">&times;</button>
+        <div class="lightbox-content">
+            <video class="lightbox-video" id="lightbox-video" controls autoplay>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // Array of portfolio items with placeholder data.
+        // Replace this with your actual video URLs, titles, and categories.
+        const portfolioItems = [
+            {
+                id: 1,
+                title: 'Summer Campaign',
+                category: 'ads',
+                thumbnail: 'https://placehold.co/400x225/1A1A1A/fff?text=Ad+1',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 2,
+                title: 'Daily Vlog',
+                category: 'long-form',
+                thumbnail: 'https://placehold.co/400x225/2A2A2A/fff?text=Vlog',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 3,
+                title: 'E-Sports Highlights',
+                category: 'gaming',
+                thumbnail: 'https://placehold.co/400x225/3A3A3A/fff?text=Gaming',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 4,
+                title: 'Short-form Reel',
+                category: 'short-form',
+                thumbnail: 'https://placehold.co/400x225/4A4A4A/fff?text=Reel',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 5,
+                title: 'Stadium Edit',
+                category: 'football-edits',
+                thumbnail: 'https://placehold.co/400x225/5A5A5A/fff?text=Football',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 6,
+                title: 'Product Showcase',
+                category: 'ecommerce-ads',
+                thumbnail: 'https://placehold.co/400x225/6A6A6A/fff?text=eCommerce',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 7,
+                title: 'Urban Explorer',
+                category: 'documentary',
+                thumbnail: 'https://placehold.co/400x225/7A7A7A/fff?text=Doc',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 8,
+                title: 'Cinematic Tones',
+                category: 'color-grading',
+                thumbnail: 'https://placehold.co/400x225/8A8A8A/fff?text=Color+Grade',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 9,
+                title: 'Anime MV',
+                category: 'anime',
+                thumbnail: 'https://placehold.co/400x225/9A9A9A/fff?text=Anime',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 10,
+                title: '30-sec Spot',
+                category: 'ads',
+                thumbnail: 'https://placehold.co/400x225/AA/fff?text=Ad+2',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 11,
+                title: 'Gaming Montage',
+                category: 'gaming',
+                thumbnail: 'https://placehold.co/400x225/BB/fff?text=Gaming+2',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            },
+            {
+                id: 12,
+                title: 'Storytelling',
+                category: 'documentary',
+                thumbnail: 'https://placehold.co/400x225/CC/fff?text=Doc+2',
+                videoUrl: 'https://cdn.glitch.me/c7a5f6e8-23c2-4a0b-ac44-59a68595a864/sample-video.mp4'
+            }
+        ];
+
+        const portfolioContainer = document.getElementById('portfolio-container');
+        const filterButtons = document.querySelectorAll('.filter-button');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxVideo = document.getElementById('lightbox-video');
+        const closeLightboxBtn = document.getElementById('close-lightbox');
+
+        // Function to render portfolio items
+        function renderItems(itemsToRender) {
+            // Clear existing items
+            portfolioContainer.innerHTML = '';
+            
+            // Generate HTML for each item and add to the container
+            itemsToRender.forEach(item => {
+                const itemHtml = `
+                    <div class="portfolio-item" data-category="${item.category}" data-video-url="${item.videoUrl}">
+                        <img src="${item.thumbnail}" alt="${item.title}" class="thumbnail">
+                        <div class="overlay">
+                            <i class="fas fa-play play-icon"></i>
+                        </div>
+                        <div class="content">
+                            <h3>${item.title}</h3>
+                            <p class="category">${item.category.replace(/-/g, ' ').toUpperCase()}</p>
+                        </div>
+                    </div>
+                `;
+                portfolioContainer.innerHTML += itemHtml;
+            });
+            
+            // Attach click event listeners to the newly created items
+            attachItemListeners();
+        }
+
+        // Function to handle filtering
+        function handleFilter(event) {
+            // Remove 'active' class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add 'active' class to the clicked button
+            event.target.classList.add('active');
+
+            const category = event.target.dataset.category;
+            
+            // Filter the items based on the category
+            const filteredItems = category === 'all' 
+                ? portfolioItems
+                : portfolioItems.filter(item => item.category === category);
+            
+            // Render the filtered items
+            renderItems(filteredItems);
+        }
+
+        // Function to open the lightbox
+        function openLightbox(videoUrl) {
+            lightboxVideo.src = videoUrl;
+            lightbox.style.display = 'flex';
+        }
+
+        // Function to close the lightbox
+        function closeLightbox() {
+            lightboxVideo.pause();
+            lightbox.style.display = 'none';
+        }
+
+        // Function to attach click listeners to portfolio items
+        function attachItemListeners() {
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            portfolioItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const videoUrl = item.dataset.videoUrl;
+                    openLightbox(videoUrl);
+                });
+            });
+        }
+
+        // Add event listeners to filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', handleFilter);
+        });
+
+        // Add event listener to close the lightbox
+        closeLightboxBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Initial render of all items
+        document.addEventListener('DOMContentLoaded', () => {
+            renderItems(portfolioItems);
+        });
+    </script>
+</body>
+</html>
